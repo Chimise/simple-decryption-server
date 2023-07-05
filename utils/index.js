@@ -12,7 +12,7 @@ const createKey = (password, length = 24) => {
 export const createCompressAndEncrypt = (password) => {
     const key = createKey(password);
     const iv = randomBytes(16);
-    return pumpify(createGzip(), new EncryptStream('aes192', iv, key));
+    return pumpify(createGzip(), new EncryptStream('aes192', key, iv));
 }
 
 export const createDecryptAndDecompress = (password) => {

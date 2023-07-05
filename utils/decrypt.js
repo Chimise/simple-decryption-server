@@ -1,4 +1,5 @@
 import {Transform} from 'node:stream';
+import { createDecipheriv } from 'node:crypto';
 
 class DecryptStream extends Transform {
     constructor(algorithm, key, options) {
@@ -21,7 +22,7 @@ class DecryptStream extends Transform {
 
         }else {
             if(!this.decipher) {
-                this.decipher = createDecipheriv(this.algorithm, this.key, this.iv);
+                this.decipher = createDecipheriv(this.algorithm, this.key, Buffer.from(this.iv, 'hex'));
             }
             const decipherChunk = this.decipher.update(chunk, enc);
             this.push(decipherChunk);
